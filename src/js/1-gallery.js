@@ -63,48 +63,32 @@ const images = [
     description: 'Lighthouse Coast Sea',
   },
 ];
-
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+const items = [];
 const container = document.querySelector('.gallery');
-container.insertAdjacentHTML('beforeend', createMarkup(images));
+const ulEl = document.querySelector('.gallery');
+const pictureEl = document.createDocumentFragment();
+images.forEach(element => {
+  const liEl = document.createElement('li');
+  liEl.classList.add('l-item');
 
-function createMarkup(arr) {
-  return arr
-    .map(
-      ({ preview, original, description }) =>
-        `<li class="gallery-item">
-  <a class="gallery-link" href="${original}">
-    <img
-      class="gallery-image"
-      src="${preview}"
-    //   data-source="${original}"
-      alt="${description}"
-    />
-  </a>
-</li>`
-    )
-    .join('');
-}
+  const galleryLink = document.createElement('a');
+  galleryLink.className = 'gallery__link';
+  galleryLink.href = element.original;
 
-container.addEventListener('click', handleModalOpen);
+  const imageEl = document.createElement('img');
+  imageEl.classList.add('i-item');
+  imageEl.src = element.preview;
+  imageEl.alt = element.description;
+  galleryLink.append(imageEl);
+  liEl.appendChild(galleryLink);
+  pictureEl.appendChild(liEl);
+});
 
-function handleModalOpen(event) {
-  event.preventDefault();
+ulEl.appendChild(pictureEl);
 
-  if (event.currentTarget === event.target) return;
-  const currentImage = event.target.closest('.gallery-item');
-
-  const sourceImage = currentImage.querySelector('img').dataset.source;
-
-  const image = images.find(({ original }) => original === sourceImage);
-
-  //   const instance = basicLightbox.create(`
-
-  //     <div class="modal">
-  //     <img
-  //         src="${image.original}"
-  //         alt="${image.description}"
-  //     />
-  // </div>`);
-
-  //   instance.show();
-}
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
