@@ -65,8 +65,7 @@ const images = [
 ];
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-const items = [];
-const container = document.querySelector('.gallery');
+
 const ulEl = document.querySelector('.gallery');
 const pictureEl = document.createDocumentFragment();
 images.forEach(element => {

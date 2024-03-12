@@ -30,9 +30,9 @@ loginForm.addEventListener('input', saveForm);
 window.addEventListener('load', loadForm);
 
 loginForm.addEventListener('submit', handleSubmit);
+
 function handleSubmit(event) {
   event.preventDefault();
-  localStorage.removeItem('feedback-form-state');
   const emailValue = loginForm.elements.email.value.trim();
   const messageValue = loginForm.elements.message.value.trim();
 
@@ -44,6 +44,7 @@ function handleSubmit(event) {
       message: messageValue,
     };
     console.log(formData);
+    localStorage.removeItem('feedback-form-state');
     event.currentTarget.reset();
   }
 }
